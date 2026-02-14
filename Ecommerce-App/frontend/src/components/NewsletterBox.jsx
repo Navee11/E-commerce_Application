@@ -17,7 +17,7 @@ function NewsletterBox() {
       </p>
       <form
         onSubmit={onSubmitHandler}
-        className="w-full  flex items-center gap-3 mx-auto my-6 border pl-3 "
+        className="w-1/2  flex items-center gap-3 mx-auto my-6 border pl-3 "
       >
         <input
           className="w-full sm:flex-1 outline-none "
