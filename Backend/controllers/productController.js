@@ -6,15 +6,12 @@ const addProduct = async (req, res) => {
   try {
     let { name, description, price, category, subCategory, sizes, bestSeller } =
       req.body;
-
     // Parse sizes if JSON string
     if (typeof sizes === "string") {
       sizes = JSON.parse(sizes);
     }
 
-    // Convert price and bestSeller to proper types
     price = Number(price);
-    bestSeller = bestSeller === "true" ? true : false;
 
     const image1 = req.files.image1 && req.files.image1[0];
     const image2 = req.files.image2 && req.files.image2[0];

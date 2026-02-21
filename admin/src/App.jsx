@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+export const currency = "$";
 
 function App() {
   const [token, setToken] = useState(
@@ -36,9 +37,9 @@ function App() {
                   <Route path="*" element={<Login setToken={setToken} />} />
                 ) : (
                   <>
-                    <Route path="/add" element={<Add />} />
-                    <Route path="/list" element={<List />} />
-                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/add" element={<Add token={token} />} />
+                    <Route path="/list" element={<List token={token} />} />
+                    <Route path="/orders" element={<Orders token={token} />} />
                   </>
                 )}
               </Routes>
