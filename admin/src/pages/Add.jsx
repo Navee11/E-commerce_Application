@@ -11,6 +11,7 @@ function Add({ token }) {
       sizes: [],
     },
   });
+  console.log(token);
   const selectedSizes = watch("sizes");
   const image1 = watch("image1")?.[0];
   const image2 = watch("image2")?.[0];

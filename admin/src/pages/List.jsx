@@ -20,6 +20,7 @@ function List({ token }) {
     }
   };
   const removeProduct = async (id) => {
+    console.log(id);
     try {
       const response = await axios.post(
         backendUrl + "/api/product/remove",
