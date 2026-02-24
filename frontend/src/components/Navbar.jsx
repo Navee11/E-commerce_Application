@@ -6,8 +6,14 @@ import { ShopContext } from "../context/ShopContext";
 function Navbar() {
   const [visible, setVisible] = useState(false);
 
-  const { setShowSearch, cartCount, navigate, token, setToken, setCartItems } =
-    useContext(ShopContext);
+  const {
+    setShowSearch,
+    getCartCount,
+    navigate,
+    token,
+    setToken,
+    setCartItems,
+  } = useContext(ShopContext);
   const logout = () => {
     localStorage.removeItem("token", setToken(""));
     setCartItems({});
@@ -73,7 +79,7 @@ function Navbar() {
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} className="w-5 min-w-5" alt="" />
           <p className="absolute -right-1.25 -bottom-1.25 w-4 text-center leading-4 bg-black text-white aspect-square rounded text-[8px]">
-            {cartCount}
+            {getCartCount()}
           </p>
         </Link>
         <img
