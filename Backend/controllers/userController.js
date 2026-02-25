@@ -3,8 +3,6 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-console.log("UserController is imported");
-
 //Token generation
 const createToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET);

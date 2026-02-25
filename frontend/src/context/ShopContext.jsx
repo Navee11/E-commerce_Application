@@ -22,12 +22,12 @@ const ShopContextProvider = (props) => {
     for (const items in cartItems) {
       // console.log("entered the function");
       let itemInfo = products.find((product) => product._id === items);
-      console.log(itemInfo);
+      // console.log(itemInfo);
       for (const item in cartItems[items]) {
         try {
           if (cartItems[items][item] > 0) {
             totalAmount += itemInfo.price * cartItems[items][item];
-            console.log("Amount" + totalAmount);
+            // console.log("Amount" + totalAmount);
           }
         } catch (error) {
           console.log("Cart Items: ", error);
@@ -40,6 +40,7 @@ const ShopContextProvider = (props) => {
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
+    console.log(cartData);
     setCartItems(cartData);
     if (token) {
       try {
@@ -116,14 +117,13 @@ const ShopContextProvider = (props) => {
 
   //To get cartItems count from DB
   const getUserCart = async (token) => {
-    console.log("Get user cart ran");
     try {
       const response = await axios.post(
         backendUrl + "/api/cart/get",
         {},
         { headers: { token } },
       );
-      console.log(response);
+
       if (response.data.success) {
         setCartItems(response.data.cartData);
       }
@@ -139,14 +139,17 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     getProductsData();
   }, []);
-
+  //Added the below useEffect to set the token from localStorage on page refresh
   useEffect(() => {
     const stored = localStorage.getItem("token");
     if (!token && stored) {
       setToken(stored);
-      getUserCart(stored);
     }
   }, []);
+  //Added the token in dependency array to get the cart data on login and refresh and also the function were called before the token was set in context so the cart data was not getting fetched on login and refresh
+  useEffect(() => {
+    getUserCart(token);
+  }, [token]);
   const value = {
     products,
     currency,
