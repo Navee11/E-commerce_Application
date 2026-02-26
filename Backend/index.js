@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config({ override: true });
 import express from "express";
+import Stripe from "stripe";
 import cors from "cors";
 import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
@@ -13,6 +14,8 @@ import orderRouter from "./routes/orderRoute.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
+//Payment Gateway
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 connectDB();
 connectCloudinary();
 //Middlewares

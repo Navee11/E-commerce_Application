@@ -1,14 +1,15 @@
-import Stripe from "stripe";
+import { stripe } from "../index.js";
+// import Stripe from "stripe";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
 //Global variables
-const currency = "USD";
+const currency = "inr";
 const deliveryCharges = 10;
 
 //Payment Gateway
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-console.log("Stripe Key", process.env.STRIPE_SECRET_KEY);
+// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// console.log("Stripe Key", process.env.STRIPE_SECRET_KEY);
 
 //Placing order using COD
 const placeOrder = async (req, res) => {
@@ -50,6 +51,7 @@ const placeOrderStripe = async (req, res) => {
     };
     const newOrder = new orderModel(orderData);
     console.log(orderData);
+    await newOrder.save();
     const line_items = items.map((item) => ({
       price_data: {
         currency: currency,
@@ -78,6 +80,24 @@ const placeOrderStripe = async (req, res) => {
     });
 
     res.json({ success: true, session_url: session.url });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+//Verify Stripe Payment
+const verifyStripePayment = async (req, res) => {
+  const { userId, orderId, success } = req.body;
+  try {
+    if (success === "true") {
+      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      await userModel.findByIdAndUpdate(userId, { cartData: {} });
+      res.json({ success: true });
+    } else {
+      await orderModel.findByIdAndDelete(orderId);
+      res.json({ success: false, message: "Payment Failed" });
+    }
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -129,4 +149,5 @@ export {
   allOrders,
   userOrders,
   updateStatus,
+  verifyStripePayment,
 };
