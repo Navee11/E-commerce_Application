@@ -1,4 +1,3 @@
-import { success } from "zod";
 import userModel from "../models/userModel.js";
 
 const addToCart = async (req, res) => {
@@ -13,7 +12,8 @@ const addToCart = async (req, res) => {
       cartData[itemId] = {};
       cartData[itemId][size] = 1;
     }
-    await userModel.findByIdAndUpdate(userId, { cartData });
+    const response = await userModel.findByIdAndUpdate(userId, { cartData });
+    console.log(response);
     res.json({ success: true, message: "Added to cart" });
   } catch (error) {
     console.log(error);

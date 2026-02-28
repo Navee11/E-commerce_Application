@@ -21,7 +21,7 @@ function Orders({ token }) {
       console.log(response.data);
       if (response.data.success) {
         console.log("statevariable is set");
-        setOrders(response.data.orders);
+        setOrders(response.data.orders.reverse());
       } else {
         toast.error(response.data.message);
       }

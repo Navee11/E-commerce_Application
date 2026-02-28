@@ -62,13 +62,13 @@ function Orders() {
                     <p>Size: {item.size} </p>
                   </div>
                   <p className="mt-1">
-                    Date :
+                    Date:&nbsp;
                     <span className="text-gray-400">
                       {new Date(item.date).toDateString()}
                     </span>
                   </p>
                   <p className="mt-1">
-                    Payment :
+                    Payment:&nbsp;
                     <span className="text-gray-400">{item.paymentMethod}</span>
                   </p>
                 </div>
@@ -78,7 +78,10 @@ function Orders() {
                   <p className="min-w-2 h-2 rounded-full bg-green-500"></p>
                   <p className="text-sm md:text-base">{item.status}</p>
                 </div>
-                <button onClick={loadOrderData} className="border px-4 py-2 text-sm font-medium rounded-sm">
+                <button
+                  onClick={loadOrderData}
+                  className="border px-4 py-2 text-sm font-medium rounded-sm"
+                >
                   Track Order
                 </button>
               </div>

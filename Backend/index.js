@@ -9,6 +9,7 @@ import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import Razorpay from "razorpay";
 
 //App config
 
@@ -16,6 +17,10 @@ const app = express();
 const port = process.env.PORT || 4000;
 //Payment Gateway
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+export const razorPayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 connectDB();
 connectCloudinary();
 //Middlewares
