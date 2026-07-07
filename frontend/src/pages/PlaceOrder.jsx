@@ -31,14 +31,14 @@ function PlaceOrder() {
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
-        console.log(response);
+        // console.log(response);
         try {
           const { data } = await axios.post(
             backendUrl + "/api/order/verifyRazorPay",
             response,
             { headers: { token } },
           );
-          console.log(data);
+          // console.log(data);
           if (data.success) {
             navigate("/orders");
             setCartItems({});
@@ -65,15 +65,15 @@ function PlaceOrder() {
     formData.append("country", data.country);
     formData.append("zipcode", data.zipcode);
     formData.append("phone", data.phone);
-    console.log(formData);
+    // console.log(formData);
     try {
       let orderItems = [];
-      console.log(cartItems);
+      // console.log(cartItems);
       for (const items in cartItems) {
         for (const item in cartItems[items]) {
           if (cartItems[items][item] > 0) {
             const itemInfo = products.find((product) => product._id === items);
-            console.log(itemInfo);
+            // console.log(itemInfo);
             if (itemInfo) {
               const productCopy = {
                 ...itemInfo,
@@ -85,7 +85,7 @@ function PlaceOrder() {
           }
         }
       }
-      console.log("Order Items: ", orderItems);
+      // console.log("Order Items: ", orderItems);
       //Cannot send formData directly as it is not a plain JS object so we should either destructure and send the data like {firstName:data.firstName,....} or else Object..fromEntries(formData.entries())
       const addressObject = Object.fromEntries(formData.entries());
       const orderData = {
@@ -94,7 +94,7 @@ function PlaceOrder() {
         items: orderItems,
         amount: getCartAmount() + delivery_fee,
       };
-      console.log(orderData);
+      // console.log(orderData);
       // console.log(method);
       switch (method) {
         case "cod":
@@ -103,12 +103,12 @@ function PlaceOrder() {
             orderData,
             { headers: { token } },
           );
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data.success) {
             setCartItems({});
             navigate("/orders");
           } else {
-            console.log(response.data.message);
+            // console.log(response.data.message);
             toast.error(response.data.message);
           }
           break;
@@ -132,7 +132,7 @@ function PlaceOrder() {
             orderData,
             { headers: { token } },
           );
-          console.log(responseRazorpay.data);
+          // console.log(responseRazorpay.data);
           if (responseRazorpay.data.success) {
             initPay(responseRazorpay.data.order);
           } else {
@@ -141,7 +141,7 @@ function PlaceOrder() {
           break;
 
         default:
-          console.log("Switch failed");
+          console.error("Switch failed");
           break;
       }
     } catch (error) {

@@ -15,10 +15,11 @@ export const currency = "$";
 
 function App() {
   const [token, setToken] = useState(
-    localStorage.getItem("token") ? localStorage.getItem("token") : "",
+    // localStorage.getItem("token") ? localStorage.getItem("token") : "",
+    sessionStorage.getItem("token") ? sessionStorage.getItem("token") : "",
   );
   useEffect(() => {
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("token", token);
   }, [token]);
   return (
     <div className="bg-gray-50 min-h-screen">

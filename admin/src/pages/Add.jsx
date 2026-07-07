@@ -11,7 +11,7 @@ function Add({ token }) {
       sizes: [],
     },
   });
-  console.log(token);
+  // console.log(token);
   const selectedSizes = watch("sizes");
   const image1 = watch("image1")?.[0];
   const image2 = watch("image2")?.[0];
@@ -19,7 +19,7 @@ function Add({ token }) {
   const image4 = watch("image4")?.[0];
 
   const onSubmitHandler = async (data) => {
-    console.log("Form Data: ", data);
+    // console.log("Form Data: ", data);
     try {
       const formData = new FormData();
       formData.append("name", data.name);

@@ -26,7 +26,7 @@ const placeOrder = async (req, res) => {
       date: Date.now(),
     };
     const newOrder = new orderModel(orderData);
-    console.log(orderData);
+    // console.log(orderData);
     await newOrder.save();
     await userModel.findByIdAndUpdate(userId, { cartData: {} });
     res.json({ success: true, message: "Order Placed" });
@@ -121,8 +121,8 @@ const placeOrderRazorPay = async (req, res) => {
     };
     const newOrder = new orderModel(orderData);
     await newOrder.save();
-    console.log(orderData);
-    console.log("Order Details", newOrder);
+    // console.log(orderData);
+    // console.log("Order Details", newOrder);
     const options = {
       amount: amount * 100,
       currency: currency.toUpperCase(),
@@ -146,7 +146,7 @@ const verifyRazorpay = async (req, res) => {
     const { userId, razorpay_order_id } = req.body;
 
     const orderInfo = await razorPayInstance.orders.fetch(razorpay_order_id);
-    console.log(orderInfo);
+    // console.log(orderInfo);
     if (orderInfo.status === "paid") {
       const responseOrder = await orderModel.findByIdAndUpdate(
         orderInfo.receipt,
@@ -155,8 +155,8 @@ const verifyRazorpay = async (req, res) => {
       const responseUser = await userModel.findByIdAndUpdate(userId, {
         cartData: {},
       });
-      console.log("Order", responseOrder);
-      console.log("User", responseUser);
+      // console.log("Order", responseOrder);
+      // console.log("User", responseUser);
       res.json({
         success: true,
         message: "Payment Successful",

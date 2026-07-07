@@ -15,7 +15,9 @@ function Navbar() {
     setCartItems,
   } = useContext(ShopContext);
   const logout = () => {
-    localStorage.removeItem("token", setToken(""));
+    // localStorage.removeItem("token", setToken(""));
+    sessionStorage.removeItem("token");
+    setToken("");
     setCartItems({});
     navigate("/login");
   };

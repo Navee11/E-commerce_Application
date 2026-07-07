@@ -31,8 +31,6 @@ const loginUser = async (req, res) => {
 
 //Route for register user
 const registerUser = async (req, res) => {
-  //   console.log("REGISTER ROUTE HIT 🚀", new Date().toISOString());
-  console.log("FIRST LOG", Math.random());
   try {
     const { name, email, password } = req.body;
 
@@ -54,7 +52,8 @@ const registerUser = async (req, res) => {
         message: "Please enter a strong password",
       });
     }
-    console.log("REGISTER ROUTE HIT 🚀", new Date().toISOString());
+    
+    
     //Hashing user password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);

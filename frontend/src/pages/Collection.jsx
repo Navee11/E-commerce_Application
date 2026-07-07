@@ -35,7 +35,7 @@ function Collection() {
         item.name.toLowerCase().includes(search.toLowerCase()),
       );
     }
-    console.log(productsCopy);
+    // console.log(productsCopy);
     if (category.length > 0) {
       productsCopy = productsCopy.filter((item) =>
         category.includes(item.category),

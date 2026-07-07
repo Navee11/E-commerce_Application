@@ -9,7 +9,11 @@ const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
   const [products, setProducts] = useState([]);
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
+  const [token, setTokenState] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return sessionStorage.getItem("token");
+  });
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
@@ -17,6 +21,16 @@ const ShopContextProvider = (props) => {
 
   const navigate = useNavigate();
 
+  const setToken = (value) => {
+    setTokenState(value);
+    if (typeof window === "undefined") return;
+
+    if (value) {
+      sessionStorage.setItem("token", value);
+    } else {
+      sessionStorage.removeItem("token");
+    }
+  };
   const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
@@ -40,7 +54,7 @@ const ShopContextProvider = (props) => {
   const updateQuantity = async (itemId, size, quantity) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId][size] = quantity;
-    console.log(cartData);
+    // console.log(cartData);
     setCartItems(cartData);
     if (token) {
       try {
@@ -141,11 +155,12 @@ const ShopContextProvider = (props) => {
   }, []);
   //Added the below useEffect to set the token from localStorage on page refresh
   useEffect(() => {
-    const stored = localStorage.getItem("token");
+    // const stored = localStorage.getItem("token");
+    const stored = sessionStorage.getItem("token");
     if (!token && stored) {
       setToken(stored);
     }
-  }, []);
+  }, [token]);
   //Added the token in dependency array to get the cart data on login and refresh and also the function were called before the token was set in context so the cart data was not getting fetched on login and refresh
   useEffect(() => {
     getUserCart(token);

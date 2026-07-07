@@ -24,7 +24,8 @@ function Login() {
         });
         if (response.data.success) {
           setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
+          // localStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("token", response.data.token);
         } else {
           toast.error(response.data.message);
         }
@@ -35,7 +36,8 @@ function Login() {
         });
         if (response.data.success) {
           setToken(response.data.token);
-          localStorage.setItem("token", response.data.token);
+          // localStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("token", response.data.token);
         } else {
           toast.error(response.data.message);
         }
@@ -44,7 +46,7 @@ function Login() {
       console.log(error.message);
     }
   };
-    useEffect(() => {
+  useEffect(() => {
     if (token) {
       navigate("/");
     }

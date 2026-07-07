@@ -18,9 +18,9 @@ function Orders({ token }) {
         {},
         { headers: { token } },
       );
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.success) {
-        console.log("statevariable is set");
+        // console.log("statevariable is set");
         setOrders(response.data.orders.reverse());
       } else {
         toast.error(response.data.message);
@@ -53,7 +53,7 @@ function Orders({ token }) {
   };
 
   useEffect(() => {
-    console.log(orders);
+    // console.log(orders);
   }, [orders]);
   useEffect(() => {
     fetchAllOrders();
@@ -70,7 +70,6 @@ function Orders({ token }) {
             <div>
               <div>
                 {order.items.map((item, index) => {
-                  console.log();
                   if (index === order.items.length - 1) {
                     return (
                       <p className="py-0.5" key={index}>

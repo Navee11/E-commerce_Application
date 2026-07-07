@@ -57,7 +57,7 @@ const addProduct = async (req, res) => {
       image: imagesUrl,
       date: Date.now(),
     };
-    console.log(productData);
+    // console.log(productData);
     await productModel.create(productData);
 
     res.json({ success: true, message: "Product added successfully" });
