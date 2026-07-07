@@ -21,8 +21,14 @@ export const razorPayInstance = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
-connectDB();
-connectCloudinary();
+try {
+  await connectDB();
+  connectCloudinary();
+  console.log("Startup successful");
+} catch (err) {
+  console.error("Startup failed:", err);
+  throw err;
+}
 //Middlewares
 
 app.use(express.json());
@@ -38,6 +44,10 @@ app.get("/", (req, res) => {
   res.send("API working");
 });
 
-app.listen(port, () => {
-  console.log(`Server is up and running on ${port}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, () => {
+    console.log(`Server is up and running on ${port}`);
+  });
+}
+
+export default app;
